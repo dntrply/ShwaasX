@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, FAB, Modal, Portal, Provider, Text} from 'react-native-paper';
-import {Dimensions, StyleSheet, ScrollView, View} from 'react-native';
+import {Dimensions, StyleSheet, ScrollView, View, Platform} from 'react-native';
 import HandShow from '../assets/handShow.svg';
 import {t} from '../messages';
 import {resetCalculator} from '../actions/form';
@@ -42,9 +42,13 @@ const styles = StyleSheet.create({
 const Home = ({navigation, resetCalculator, route}) => {
   const {width, height} = Dimensions.get('window');
   const isPortrait = height > width;
-  const dimensionOfImage = isPortrait ? width * 0.9 : height * 0.9;
-  const opacity = isPortrait ? 0.8 : 0.1;
-  const {appVersion} = "2.9";
+  let dimensionOfImage = isPortrait ? width * 0.9 : height * 0.9;
+  const opacity = isPortrait ? 0.5 : 0.5;
+  const appVersion = "2.9";
+
+  if (Platform.OS === 'web') {
+    dimensionOfImage = isPortrait ? width * 0.6 : height * 0.6;
+  }
 
   useEffect(() => navigation.addListener('focus', resetCalculator), []);
   const [imageOpacity, setImageOpacity] = useState(1);
@@ -70,7 +74,7 @@ const Home = ({navigation, resetCalculator, route}) => {
           height={dimensionOfImage}
           width={dimensionOfImage}
           opacity={opacity}
-          zIndex={1}
+          zindex={1}
         />
       </ScrollView>
       <Menu

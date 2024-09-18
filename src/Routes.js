@@ -1,5 +1,7 @@
 import React from 'react';
-import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
+// import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
+import { HeaderBackButton } from '@react-navigation/elements';
 import Home from './screens/Home';
 import Questionnaire from './screens/Questionnaire';
 import Recommendations from './screens/RecommendationScreen';

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button, withTheme} from 'react-native-paper';
-import {View, StyleSheet} from 'react-native';
-import {t} from '../messages';
+import { Button, withTheme } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { t } from '../messages';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -11,8 +11,10 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     marginLeft: 'auto',
+    borderRadius: 0,
   },
   nextButtonContent: {
+    width: '100%',
     height: 70,
     flexDirection: 'row-reverse',
   },
@@ -27,32 +29,36 @@ const styles = StyleSheet.create({
 const Navigator = ({
   style,
   theme,
-  onPrevious = () => {},
-  onNext = () => {},
+  onPrevious = () => { },
+  onNext = () => { },
   firstPage,
   lastPage,
 }) => {
   return (
     <View
-      style={[styles.wrapper, {backgroundColor: theme.colors.primary}, style]}>
+      style={[styles.wrapper, { backgroundColor: theme.colors.primary }, style]}>
       {!firstPage && (
         <Button
-          color={'white'}
+          mode={'contained'}
+          buttoncolor={'white'}
+          textcolor={'white'}
           icon={'arrow-left'}
           style={styles.previousButton}
           contentStyle={styles.previousButtonContent}
-          labelStyle={{fontSize: 18}}
+          labelStyle={{ fontSize: 18 }}
           onPress={onPrevious}>
           {t('previous')}
         </Button>
       )}
       {!lastPage && (
         <Button
-          color={'white'}
+          mode={'contained'}
+          buttoncolor={'white'}
+          textcolor={'white'}
           icon={'arrow-right'}
           style={styles.nextButton}
           contentStyle={styles.nextButtonContent}
-          labelStyle={{fontSize: 18}}
+          labelStyle={{ fontSize: 18 }}
           onPress={onNext}>
           {t('next')}
         </Button>

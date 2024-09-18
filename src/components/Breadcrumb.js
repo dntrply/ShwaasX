@@ -6,11 +6,13 @@ import {
   StyleSheet,
   View,
   TouchableNativeFeedback,
+  Platform,
 } from 'react-native';
 import _ from 'lodash';
 import {isDefined} from '../domain/questions/utils';
 import {visibleQuestions} from '../domain/questionModel';
 import colors from '../colors';
+import { TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -50,6 +52,7 @@ const Breadcrumb = ({theme, form, currentIndex, onQuestionChange}) => {
         {visibleQuestions(form).map((vq, index, arr) => {
           let color = getColor(arr, form, index, currentIndex);
           return (
+            Platform.OS === 'android' ? (
             <TouchableNativeFeedback
               key={`q-${index}`}
               onPress={() => {
@@ -73,7 +76,7 @@ const Breadcrumb = ({theme, form, currentIndex, onQuestionChange}) => {
                 }}>
                 <Text
                   style={{
-                    color: Colors.white,
+                    color: colors.accent,
                     alignSelf: 'center',
                     fontSize: 18,
                   }}>
@@ -81,6 +84,37 @@ const Breadcrumb = ({theme, form, currentIndex, onQuestionChange}) => {
                 </Text>
               </View>
             </TouchableNativeFeedback>
+            ): (
+              <TouchableOpacity
+                key={`q-${index}`}
+                onPress={() => {
+                  onQuestionChange(index);
+                }}
+                >
+                  <View
+                  style={{
+                    backgroundColor: color,
+                    width: 50,
+                    height: 50,
+                    marginHorizontal: 8,
+                    borderRadius: 25,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginVertical: 10,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: colors.accent,
+                      alignSelf: 'center',
+                      fontSize: 18,
+                    }}
+                  >
+                    {index + 1}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )
           );
         })}
       </ScrollView>

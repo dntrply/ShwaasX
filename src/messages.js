@@ -1,4 +1,5 @@
-import LocalizedStrings from 'react-native-localization';
+import * as Localization from 'expo-localization';
+import { I18n } from 'i18n-js';
 import messages_en from './translations/en.json';
 import messages_hi_In from './translations/hi_IN.json';
 import messages_kn_In from './translations/kn_IN.json';
@@ -7,7 +8,7 @@ import messages_bn_In from './translations/bn_IN.json';
 import messages_ta_In from './translations/ta_IN.json';
 import messages_mr from './translations/mr.json';
 
-const strings = {
+translations = {
   en: messages_en,
   hi_In: messages_hi_In,
   kn_In: messages_kn_In,
@@ -27,18 +28,24 @@ export const languageOptions = [
   {label: 'मराठी', locale: 'mr', labelInEnglish: 'Marathi'},
 ];
 
-const messages = new LocalizedStrings(strings);
+console.log('messages.js --> about to create I18n object');
+const messages = new I18n(translations);
+console.log('messages.js --> created I18n object');
+console.log('messages.js --> messages.locale: ', messages.locale);
+messages.locale = "en";
+console.log('messages.js --> messages.locale: ', messages.locale);
+// console.log('messages.js --> messages: ', messages);
 
 export const getLanguage = () => {
-  const languageCode = messages.getLanguage();
+  const languageCode = messages.locale;
   return languageOptions.find(option => option.locale === languageCode)
     .labelInEnglish;
 };
 
 export const changeLanguage = languageKey => {
-  messages.setLanguage(languageKey);
+  messages.locale = languageKey;
 };
 
-export const t = str => messages[str] || str;
+export const t = str => messages.t(str) || str;
 
 export default messages;

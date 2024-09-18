@@ -1,20 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
+  TouchableOpacity,
   TouchableNativeFeedback,
   View,
   ScrollView,
   Modal,
   Dimensions,
+  Platform,
 } from 'react-native';
-import {Text} from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import QuestionBase from './QuestionBase';
-import {t} from '../../messages';
+import { t } from '../../messages';
 import questionTypes from '../../domain/questionTypes/questionTypes';
-import {isDefined} from '../../domain/questions/utils';
+import { isDefined } from '../../domain/questions/utils';
 import QuestionImage from './QuestionImage';
 import get from 'lodash/get';
 import Image from 'react-native-scalable-image';
+import { Image as ImageNative } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,39 +65,59 @@ const styles = StyleSheet.create({
   },
 });
 
-const Item = ({title, onPress, selectedAnswers, image}) => {
+const Item = ({ title, onPress, selectedAnswers, image }) => {
   const isSelected = selectedAnswers.includes(title);
   const [modalVisible, setModalVisible] = useState(false);
   const totalWidthOfScreen = Dimensions.get('window').width;
 
   return (
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Modal
         animationType={'fade'}
         transparent={false}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}>
-        <TouchableNativeFeedback onPress={() => setModalVisible(false)}>
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Image source={image} width={totalWidthOfScreen - 32} />
-          </View>
-        </TouchableNativeFeedback>
+        {Platform.OS === 'android' ? (
+          <TouchableNativeFeedback onPress={() => setModalVisible(false)}>
+            <View
+              style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+              <Image source={image} width={totalWidthOfScreen - 32} />
+            </View>
+          </TouchableNativeFeedback>
+        ) : (
+          <TouchableOpacity onPress={() => setModalVisible(false)}>
+            {console.log("SelectQuestion.js --> TouchableOpacity --> before Image")}
+            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+              <ImageNative source={image} width={totalWidthOfScreen - 32} />
+            </View>
+            {console.log("SelectQuestion.js --> TouchableOpacity --> after Image")}
+          </TouchableOpacity>
+        )}
       </Modal>
-      <View style={{flex: 1}}>
-        <TouchableNativeFeedback onPress={() => onPress(title)}>
-          <View
-            style={[isSelected ? styles.selectedItem : styles.nonSelectedItem]}>
-            <Text
-              style={[
-                isSelected
-                  ? styles.selectedAnswerText
-                  : styles.nonSelectedAnswerText,
-              ]}>
-              {t(title)}
-            </Text>
-          </View>
-        </TouchableNativeFeedback>
+      <View style={{ flex: 1 }}>
+        {Platform.OS === 'android' ? (
+          <TouchableNativeFeedback onPress={() => onPress(title)}>
+            <View
+              style={[isSelected ? styles.selectedItem : styles.nonSelectedItem]}>
+              <Text
+                style={[
+                  isSelected
+                    ? styles.selectedAnswerText
+                    : styles.nonSelectedAnswerText,
+                ]}>
+                {t(title)}
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+        ) : (
+          <TouchableOpacity onPress={() => onPress(title)}>
+            <View style={[isSelected ? styles.selectedItem : styles.nonSelectedItem]}>
+              <Text style={[isSelected ? styles.selectedAnswerText : styles.nonSelectedAnswerText]}>
+                {t(title)}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
       <View
         style={[
@@ -102,11 +125,21 @@ const Item = ({title, onPress, selectedAnswers, image}) => {
           styles.imageBackground,
         ]}>
         {image ? (
-          <TouchableNativeFeedback onPress={() => setModalVisible(true)}>
-            <View style={styles.flexUp}>
-              <Image source={image} width={50} style={styles.thumbnail}></Image>
-            </View>
-          </TouchableNativeFeedback>
+          Platform.OS === 'android' ? (
+            <TouchableNativeFeedback onPress={() => setModalVisible(true)}>
+              <View style={styles.flexUp}>
+                <Image source={image} width={50} style={styles.thumbnail}></Image>
+              </View>
+            </TouchableNativeFeedback>
+          ) : (
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              {console.log("SelectQuestion.js --> TouchableOpacity 2 --> before Image")}
+              <View style={styles.flexUp}>
+                <ImageNative source={image} width={50} style={styles.thumbnail} resizeMode={'contain'} />
+              </View>
+              {console.log("SelectQuestion.js --> TouchableOpacity 2 --> after Image")}
+            </TouchableOpacity>
+          )
         ) : (
           <TouchableNativeFeedback onPress={() => onPress(title)}>
             <View style={styles.flexUp}></View>
@@ -122,12 +155,12 @@ const isSingleSelect = question =>
     question.type.key,
   );
 
-export default ({number, question, onAnswered = () => {}, value}) => {
+export default ({ number, question, onAnswered = () => { }, value }) => {
   const answer = !isDefined(value)
     ? []
     : isSingleSelect(question)
-    ? [value]
-    : value;
+      ? [value]
+      : value;
 
   const onItemSelected = key => {
     if (isSingleSelect(question)) {
@@ -146,7 +179,7 @@ export default ({number, question, onAnswered = () => {}, value}) => {
     onAnswered(question, answer.concat(key));
   };
 
-  const RenderItem = ({item, index, image}) => {
+  const RenderItem = ({ item, index, image }) => {
     return (
       <Item
         question={question}

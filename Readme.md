@@ -29,14 +29,11 @@ Shwaas was originally developed during Covid to identify those who are at risk o
 - Production apk build and test environment
 
 ~~### Storybook~~
-~~~~
 ~~App.js has two lines in the end~~
-~~~~
 ~~```~~
 ~~export default codePush(App);~~
 ~~export {default} from './storybook';~~
 ~~```~~
-~~~~
 ~~If you want to run the app, uncomment the first line. Else uncomment the second line.~~
 
 ### Links
@@ -47,22 +44,18 @@ Shwaas was originally developed during Covid to identify those who are at risk o
 
 [Documentation](https://drive.google.com/drive/folders/16lVSZA2ki3nhjJ35WkUwU6Zy7Tky_Ohx)
 
-~~### Release apk to staging~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~
-~~- Get values for ~/.gradle/gradle.properties and shwaas.keystore (android/app)~~~~~~~~~~~~~~
-~~- Change value of CodePushDeploymentKey in android/app/src/main/values/strings.xml to production~~~~~~~~~~~~~~
-~~- `make create-bundle`~~~~~~~~~~~~~~
-~~- Upload bundle~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~
-~~### Release apk to production~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~
-~~- Update versionCode and versionName in android/app/build.gradle~~~~~~~~~~~~~~
-~~- Get values for ~/.gradle/gradle.properties and shwaas.keystore (put it in android/app) from Keeweb~~~~~~~~~~~~~~
-~~- Change value of CodePushDeploymentKey in android/app/src/main/values/strings.xml to production~~~~~~~~~~~~~~
-~~- `make create-bundle`~~~~~~~~~~~~~~
-~~- Upload bundle~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~
-~~### Codepush~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~
-~~Staging - `make codepush-staging`~~~~~~~~~~~~~~
-~~Production - `make codepush-production`~~~~~~~~~~~~~~
+~~### Release apk to staging~~
+
+~~- Get values for ~/.gradle/gradle.properties and shwaas.keystore (android/app)~~
+~~- Change value of CodePushDeploymentKey in android/app/src/main/values/strings.xml to production~~
+~~- `make create-bundle`~~
+~~- Upload bundle~~
+~~### Release apk to production~~
+~~- Update versionCode and versionName in android/app/build.gradle~~
+~~- Get values for ~/.gradle/gradle.properties and shwaas.keystore (put it in android/app) from Keeweb~~
+~~- Change value of CodePushDeploymentKey in android/app/src/main/values/strings.xml to production~~
+~~- `make create-bundle`~~
+~~- Upload bundle~~
+~~### Codepush~~
+~~Staging - `make codepush-staging`~~
+~~Production - `make codepush-production`~~

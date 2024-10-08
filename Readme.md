@@ -22,11 +22,17 @@ Shwaas was originally developed during Covid to identify those who are at risk o
 - npx expo run:android (to run and test on an emulator)
 
 ## What is still to be ported
+- splash screen / logo
 - Storybook
 - Analytics
 - Staging ENvironment
 - Dev apk build and test environment
 - Production apk build and test environment
+
+## Web version
+- Needs testing
+- Some functioality does not work such as count on touch / click for breadth count
+- image placement is off and needs work
 
 ~~### Storybook~~
 ~~App.js has two lines in the end~~

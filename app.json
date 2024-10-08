@@ -4,10 +4,10 @@
     "slug": "ShwaasX",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ic_launcher_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/ic_launcher.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,13 +18,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dntrplytch.ShwaasX"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/ic_launcher_icon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "47bb1c7b-9d9a-42da-8a45-828db5b86617"
+      }
+    }
   }
 }
